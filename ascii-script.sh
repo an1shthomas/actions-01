@@ -1,6 +1,6 @@
 #!/bin/bash
 
-sudo apt-get update && apt-get install -y cowsay
+sudo apt-get install -y cowsay
 
 cowsay -f dragon "Run for cover, I am a DRAGON....RAWR" >dragon.txt
 
