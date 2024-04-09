@@ -17,7 +17,7 @@ jobs:
           chmod +x ascii-script.sh
           ./ascii-script.sh
       - name: upload dragon text file
-        uses: actions/upload-artifcat@v3
+        uses: actions/upload-artifact@v3
         with:
           name: dragon-text-file
           path: dragon.txt
