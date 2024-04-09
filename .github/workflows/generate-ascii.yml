@@ -4,16 +4,33 @@ on:
   push
 
 jobs:
-  ascii_job:
+
+  build_job_1:
     runs-on: ubuntu-latest
     steps:
       - name: checkout repo
         uses: actions/checkout@v4
-
       - name: list repo files
         run: ls -la
-
       - name: Execute shell script
         run: |
           chmod +x ascii-script.sh
           ./ascii-script.sh
+
+  test_job_2:
+    needs: build_job_1
+    runs-on: ubuntu-latest
+    steps:
+      - name: sleep for 10 seconds
+        run: sleep 10
+      - name: check if test file exists
+        run: grep -i "dragon" dragon.txt
+
+  deploy_job_3:
+    needs: [build_job_1 test_job_2]
+    runs-on: ubuntu-latest
+    steps:
+      - name: read file
+        run: cat dragon.txt
+      - name: deploy
+        run: echo "deploying ascii-script"
