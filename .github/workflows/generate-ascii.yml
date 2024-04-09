@@ -12,17 +12,24 @@ jobs:
         uses: actions/checkout@v4
       - name: list repo files
         run: ls -la
-      - name: Execute shell script
+      - name: execute shell script
         run: |
           chmod +x ascii-script.sh
           ./ascii-script.sh
+      - name: upload dragon text file
+        uses: actions/upload-artifcat@v3
+        with:
+          name: dragon-text-file
+          path: dragon.txt
 
   test_job_2:
     needs: build_job_1
     runs-on: ubuntu-latest
     steps:
-      - name: sleep for 10 seconds
-        run: sleep 10
+      - name: download dragon text file
+        uses: actions/download-artifact@v3
+        with:
+          name: dragon-text-file
       - name: check if test file exists
         run: grep -i "dragon" dragon.txt
 
@@ -30,6 +37,10 @@ jobs:
     needs: [build_job_1, test_job_2]
     runs-on: ubuntu-latest
     steps:
+      - name: download dragon text file
+        uses: actions/download-artifact@v3
+        with:
+          name: dragon-text-file
       - name: read file
         run: cat dragon.txt
       - name: deploy
